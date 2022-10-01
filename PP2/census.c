@@ -9,7 +9,7 @@
  *              for data collection purposes. Asks the user to
  *              input information reguarding their social media
  *              usage and phone number credentials.
-*/
+ */
 
 #include <stdio.h>
 
@@ -21,7 +21,7 @@ int main()
   */
 
  /*
-  * NATURE AND PURPOSE OF EACH VARIABLE NAME
+  * VARIABLE SUBSECTION
   * 
   * average_text_messages_received_per_day:     
   *                                         The subjects's average

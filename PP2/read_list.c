@@ -20,7 +20,7 @@ int main()
   */
 
  /*
-  * NATURE AND PURPOSE OF EACH VARIABLE NAME
+  * VARIABLE SUBSECTION
   * 
   * CS1313_average_height_in_m:     
   *                               The average height of all
