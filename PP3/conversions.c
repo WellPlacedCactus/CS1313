@@ -21,7 +21,17 @@ int main()
   */
 
  /*
-  * VARIABLE SUBSECTION
+  * NAMED CONSTANT SUBSECTION
+  * 
+  * inches_per_meter:
+  *                                   The constant expressing the
+  *                                   quantity of inches in one meter
+  *                                   should be this.
+  * watts_per_mechanical_horsepower:
+  *                                   The constant expressing the
+  *                                   quantity of watts in one
+  *                                   mechanical horsepower should be
+  *                                   this.
   * 
   * feet_per_fathom:
   *                                   The constant expressing the
@@ -39,15 +49,18 @@ int main()
   *                                   The constant expressing the
   *                                   quantity of kilowatts in one
   *                                   megawatt should be this.
-  * inches_per_meter:
-  *                                   The constant expressing the
-  *                                   quantity of inches in one meter
-  *                                   should be this.
-  * watts_per_mechanical_horsepower:
-  *                                   The constant expressing the
-  *                                   quantity of watts in one
-  *                                   mechanical horsepower should be
-  *                                   this.
+  */
+
+  const float   inches_per_meter = 39.37;
+  const float   watts_per_mechanical_horsepower = 745.7;
+  const int     feet_per_fathom = 6;
+  const int     inches_per_foot = 12;
+  const int     watts_per_kilowatt = 1000;
+  const int     kilowatts_per_megawatt = 1000;
+
+ /*
+  * VARIABLE SUBSECTION
+  * 
   * depth_in_fathoms:
   *                                   The client's desired depth
   *                                   measured in fathoms should be
@@ -64,13 +77,6 @@ int main()
   *                                   measured in megawatts should be
   *                                   this.
   */
-
-  const int     feet_per_fathom = 6;
-  const int     inches_per_foot = 12;
-  const int     watts_per_kilowatt = 1000;
-  const int     kilowatts_per_megawatt = 1000;
-  const float   inches_per_meter = 39.37;
-  const float   watts_per_mechanical_horsepower = 745.7;
 
   float         depth_in_fathoms;
   float         power_in_mechanical_horsepower;
@@ -126,27 +132,25 @@ int main()
   * Calculates the depth in meters from the client's desired depth in
   * fathoms using the conversions expressed as constants in the
   * declaration section of this program as well as some mathematical
-  * arithmetics.
+  * arithmetics
   */
-  depth_in_meters = (
-      depth_in_fathoms
-    * feet_per_fathom
-    * inches_per_foot
-    / inches_per_meter
-  );
+  depth_in_meters =
+    depth_in_fathoms *
+    feet_per_fathom *
+    inches_per_foot /
+    inches_per_meter;
 
  /*
   * Calculates the power in megawatts from the client's desired power
   * in mechanical horsepower using the conversions expressed as
   * constants in the declaration section of this program as well as
-  * some methematical arithmetics.
+  * some methematical arithmetics
   */
-  power_in_megawatts = (
-      power_in_mechanical_horsepower
-    * watts_per_mechanical_horsepower
-    / watts_per_kilowatt
-    / kilowatts_per_megawatt
-  );
+  power_in_megawatts =
+    power_in_mechanical_horsepower *
+    watts_per_mechanical_horsepower /
+    watts_per_kilowatt /
+    kilowatts_per_megawatt;
 
  /*
   * OUTPUT SUBSECTION
