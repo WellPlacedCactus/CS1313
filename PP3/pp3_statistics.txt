@@ -1,0 +1,647 @@
+Script started on Tue 04 Oct 2022 04:55:14 PM CDT
+kennedy:vu0062> pwd
+/oushomes/Student/vu0062/CS1313
+kennedy:vu0062> ls -l
+total 104
+drwx------. 2 vu0062 students  4096 Oct  4 16:55 .
+drwx-----x. 9 vu0062 students  4096 Oct  4 02:09 ..
+-rw-r--r--. 1 vu0062 students  3483 Sep 28 13:08 circlecalc.c
+-rwxr-xr-x. 1 vu0062 students  7629 Oct  4 16:49 conversions
+-rw-r--r--. 1 vu0062 students  5587 Oct  4 16:46 conversions.c
+-rw-r--r--. 1 vu0062 students   465 Sep 28 12:26 makefile
+-rw-r--r--. 1 vu0062 students   465 Sep 28 12:26 makefile~
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:36 my_number.c
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:35 my_number.c~
+-rw-r--r--. 1 vu0062 students  5594 Aug 29 11:03 pp1.txt
+-rw-r--r--. 1 vu0062 students  4247 Sep 19 17:47 pp2_example.txt
+-rw-r--r--. 1 vu0062 students  9186 Oct  4 16:50 pp3_conversions.txt
+-rw-r--r--. 1 vu0062 students  5469 Sep 28 15:17 pp3_example.txt
+-rw-r--r--. 1 vu0062 students     0 Oct  4 16:55 pp3_statistics.txt
+-rw-r--r--. 1 vu0062 students  2808 Sep 19 13:59 read_list.c
+-rw-r--r--. 1 vu0062 students 19133 Oct  4 16:54 statistics.c
+kennedy:vu0062> cat makefile
+
+conversions:	conversions.c
+		gcc -o conversions conversions.c -lm
+
+statistics:	statistics.c
+		gcc -o statistics statistics.c -lm
+
+circlecalc:	circlecalc.c
+		gcc -o circlecalc circlecalc.c -lm
+
+census:		census.c
+		gcc -o census census.c
+
+read_list:	read_list.c
+		gcc -o read_list read_list.c
+
+my_number:	my_number.c
+		gcc -o my_number my_number.c
+
+clean:	
+		rm -f my_number
+		rm -f read_list
+		rm -f census
+		rm -f conversions
+		rm -f statistics
+		rm -f circlecalc
+kennedy:vu0062> cat statistics.c
+
+/*
+ *  Project #3:   Ghetto Statistics Calculator
+ *  Program:      statistics
+ *  Author:       Nathan Vu (nathan.v.vu-1@ou.edu)
+ *  Class:        CS1313 010 Programming for Non-Majors in C
+ *  Lab:          Sec 010 Fridays 10:30am
+ *  Description:  Generates simple statistics calculations using two
+ *                lists of numbers provided through user input by the
+ *                client.
+ */
+
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{ /* main */
+
+ /*
+  * DECLARATION SECTION
+  */
+
+ /*
+  * NAMED CONSTANT SUBSECTION
+  * 
+  * length_of_a_single_list:
+  *                             The length of a single list given by the
+  *                             user should be this.
+  * multiplicative_identity:
+  *                             The value representing the invisble
+  *                             number behind every mathematical value
+  *                             should be this.
+  */
+
+  const int length_of_a_single_list = 5;
+  const int multiplicative_identity = 1;
+
+ /*
+  * VARIABLE SUBSECTION
+  * 
+  * value_of_first_list_at_index_0:
+  *                                           The first value of the
+  *                                           first list should be
+  *                                           this.
+  * value_of_first_list_at_index_1:
+  *                                           The second value of the
+  *                                           first list should be
+  *                                           this.
+  * value_of_first_list_at_index_2:
+  *                                           The third value of the
+  *                                           first list should be
+  *                                           this.
+  * value_of_first_list_at_index_3:
+  *                                           The fourth value of the
+  *                                           first list should be
+  *                                           this.
+  * value_of_first_list_at_index_4:
+  *                                           The fifth value of the
+  *                                           first list should be
+  *                                           this.
+  * 
+  * value_of_second_list_at_index_0:
+  *                                           The first value of the
+  *                                           second list should be
+  *                                           this.
+  * value_of_second_list_at_index_1:
+  *                                           The second value of the
+  *                                           second list should be
+  *                                           this.
+  * value_of_second_list_at_index_2:
+  *                                           The third value of the
+  *                                           second list should be
+  *                                           this.
+  * value_of_second_list_at_index_3:
+  *                                           The fourth value of the
+  *                                           second list should be
+  *                                           this.
+  * value_of_second_list_at_index_4:
+  *                                           The fifth value of the
+  *                                           second list should be
+  *                                           this.
+  * 
+  * mean_of_first_list:
+  *                                           The sum of all the values
+  *                                           of the first list divided
+  *                                           by the length of that list
+  *                                           should be this.
+  * mean_of_second_list:
+  *                                           The sum of all the values
+  *                                           of the second list divided
+  *                                           by the length of that list
+  *                                           should be this.
+  * 
+  * variance_of_first_list:
+  *                                           The quantity representing
+  *                                           the bias-corrected sample
+  *                                           variance of the first
+  *                                           list should be this.
+  * variance_of_second_list:
+  *                                           The quantity representing
+  *                                           the bias-corrected sample
+  *                                           variance of the second
+  *                                           list should be this.
+  * 
+  * standard_deviation_of_first_list:
+  *                                           The quantity representing
+  *                                           the bias-corrected standard
+  *                                           deviation of the first
+  *                                           list should be this.
+  * standard_deviation_of_second_list:
+  *                                           The quantity representing
+  *                                           the bias-corrected standard
+  *                                           deviation of the second
+  *                                           list should be this.
+  * 
+  * standard_error_of_first_list:
+  *                                           The quantity representing
+  *                                           the standard error of
+  *                                           the first list should be
+  *                                           this.
+  *                                           
+  * standard_error_of_second_list:
+  *                                           The quantity representing
+  *                                           the standard error of
+  *                                           the second list should be
+  *                                           this.
+  * 
+  * sum_of_first_list:
+  *                                           The quantity representing
+  *                                           the sum of all values in
+  *                                           the first list should be
+  *                                           this.
+  * sum_of_second_list:
+  *                                           The quantity representing
+  *                                           the sum of all values in
+  *                                           the second list should be
+  *                                           this.
+  * sum_of_products:
+  *                                           The quantity representing
+  *                                           the extended dot product
+  *                                           of the two vectors defined
+  *                                           as lists above should be
+  *                                           this.
+  * sum_of_squares_of_first_list:
+  *                                           The quantity representing
+  *                                           the sum of the square of
+  *                                           all elements of the first
+  *                                           list should be this.
+  * sum_of_squares_of_second_list:
+  *                                           The quantity representing
+  *                                           the sum of the square of
+  *                                           all elements of the second
+  *                                           list should be this.
+  * 
+  * correlation_coefficient_of_both_lists:
+  *                                           The quantity representing
+  *                                           the Pearson product-moment
+  *                                           correlation coefficient
+  *                                           between the two lists
+  *                                           should be this.
+  */
+
+  float     value_of_first_list_at_index_0;
+  float     value_of_first_list_at_index_1;
+  float     value_of_first_list_at_index_2;
+  float     value_of_first_list_at_index_3;
+  float     value_of_first_list_at_index_4;
+
+  float     value_of_second_list_at_index_0;
+  float     value_of_second_list_at_index_1;
+  float     value_of_second_list_at_index_2;
+  float     value_of_second_list_at_index_3;
+  float     value_of_second_list_at_index_4;
+
+  float     mean_of_first_list;
+  float     mean_of_second_list;
+
+  float     variance_of_first_list;
+  float     variance_of_second_list;
+  
+  float     standard_deviation_of_first_list;
+  float     standard_deviation_of_second_list;
+  
+  float     standard_error_of_first_list;
+  float     standard_error_of_second_list;
+
+  float     sum_of_first_list;
+  float     sum_of_second_list;
+  float     sum_of_products;
+  float     sum_of_squares_of_first_list;
+  float     sum_of_squares_of_second_list;
+
+  float     correlation_coefficient_of_both_lists;
+
+ /*
+  * EXECUTION SECTION
+  */
+
+ /*
+  * GREETING SUBSECTION
+  */
+
+ /*
+  * Informs the client of what the purpose of the program
+  */
+  printf("You will now be asked for two lists of numbers from\n");
+  printf("which some meaningful statistical data will be\n");
+  printf("generated from. You will then read the data because\n");
+  printf("it took me alot of effort generating it.\n");
+
+ /*
+  * INPUT SUBSECTION
+  */
+
+ /*
+  * Prompts the client of the first list of numbers
+  */
+  printf("Please enter the first list of numbers with spaces\n");
+  printf("between the numbers.\n");
+
+ /*
+  * Inputs the first list of numbers
+  */
+  scanf("%f %f %f %f %f",
+    &value_of_first_list_at_index_0,
+    &value_of_first_list_at_index_1,
+    &value_of_first_list_at_index_2,
+    &value_of_first_list_at_index_3,
+    &value_of_first_list_at_index_4);
+
+ /*
+  * Prompts the client of the second list of numbers
+  */
+  printf("Please enter the second list of numbers with spaces\n");
+  printf("between the numbers.\n");
+
+ /*
+  * Inputs the second list of numbers
+  */
+  scanf("%f %f %f %f %f",
+    &value_of_second_list_at_index_0,
+    &value_of_second_list_at_index_1,
+    &value_of_second_list_at_index_2,
+    &value_of_second_list_at_index_3,
+    &value_of_second_list_at_index_4);
+
+ /*
+  * CALCULATION SUBSECTION
+  */
+
+ /*
+  * Calculates the mean of the first list using the constants declared
+  * in the declaration section of the program as well as the values
+  * inputted by the user in the input section of the program
+  */
+  mean_of_first_list =
+   (value_of_first_list_at_index_0 +
+    value_of_first_list_at_index_1 +
+    value_of_first_list_at_index_2 +
+    value_of_first_list_at_index_3 +
+    value_of_first_list_at_index_4) /
+    length_of_a_single_list;
+
+ /*
+  * Calculates the variance of the first list using the constants
+  * declared in the declaration section of the program as well as the
+  * values inputted by the user in the input section of the program
+  */
+  variance_of_first_list =
+   ((value_of_first_list_at_index_0 - mean_of_first_list) *
+    (value_of_first_list_at_index_0 - mean_of_first_list) +
+    (value_of_first_list_at_index_1 - mean_of_first_list) *
+    (value_of_first_list_at_index_1 - mean_of_first_list) +
+    (value_of_first_list_at_index_2 - mean_of_first_list) *
+    (value_of_first_list_at_index_2 - mean_of_first_list) +
+    (value_of_first_list_at_index_3 - mean_of_first_list) *
+    (value_of_first_list_at_index_3 - mean_of_first_list) +
+    (value_of_first_list_at_index_4 - mean_of_first_list) *
+    (value_of_first_list_at_index_4 - mean_of_first_list)) /
+    (length_of_a_single_list - multiplicative_identity);
+
+ /*
+  * Calculates the standard deviation of the first list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  standard_deviation_of_first_list =
+    sqrt(variance_of_first_list);
+
+ /*
+  * Calculates the standard error of the first list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  standard_error_of_first_list =
+    standard_deviation_of_first_list /
+    sqrt(length_of_a_single_list);
+
+ /*
+  * Calculates the mean of the second list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  mean_of_second_list =
+   (value_of_second_list_at_index_0 +
+    value_of_second_list_at_index_1 +
+    value_of_second_list_at_index_2 +
+    value_of_second_list_at_index_3 +
+    value_of_second_list_at_index_4) /
+    length_of_a_single_list;
+
+ /*
+  * Calculates the variance of the second list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  variance_of_second_list =
+   ((value_of_second_list_at_index_0 - mean_of_second_list) *
+    (value_of_second_list_at_index_0 - mean_of_second_list) +
+    (value_of_second_list_at_index_1 - mean_of_second_list) *
+    (value_of_second_list_at_index_1 - mean_of_second_list) +
+    (value_of_second_list_at_index_2 - mean_of_second_list) *
+    (value_of_second_list_at_index_2 - mean_of_second_list) +
+    (value_of_second_list_at_index_3 - mean_of_second_list) *
+    (value_of_second_list_at_index_3 - mean_of_second_list) +
+    (value_of_second_list_at_index_4 - mean_of_second_list) *
+    (value_of_second_list_at_index_4 - mean_of_second_list)) /
+    (length_of_a_single_list - multiplicative_identity);
+
+ /*
+  * Calculates the standard deviation of the second list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  standard_deviation_of_second_list =
+    sqrt(variance_of_second_list);
+
+ /*
+  * Calculates the standard error of the second list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  standard_error_of_second_list =
+    standard_deviation_of_second_list /
+    sqrt(length_of_a_single_list);
+
+ /*
+  * Calculates the sum of the first list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  sum_of_first_list =
+    value_of_first_list_at_index_0 +
+    value_of_first_list_at_index_1 +
+    value_of_first_list_at_index_2 +
+    value_of_first_list_at_index_3 +
+    value_of_first_list_at_index_4;
+
+ /*
+  * Calculates the sum of the second list using the
+  * constants declared in the declaration section of the program as
+  * well as the values inputted by the user in the input section
+  * of the program
+  */
+  sum_of_second_list =
+    value_of_second_list_at_index_0 +
+    value_of_second_list_at_index_1 +
+    value_of_second_list_at_index_2 +
+    value_of_second_list_at_index_3 +
+    value_of_second_list_at_index_4;
+
+ /*
+  * Calculates the sum of the products of both the first and the second
+  * lists using the constants declared in the declaration section of
+  * the program as well as the values inputted by the user in the input
+  * section of the program
+  */
+  sum_of_products =
+    value_of_first_list_at_index_0 * value_of_second_list_at_index_0 +
+    value_of_first_list_at_index_1 * value_of_second_list_at_index_1 +
+    value_of_first_list_at_index_2 * value_of_second_list_at_index_2 +
+    value_of_first_list_at_index_3 * value_of_second_list_at_index_3 +
+    value_of_first_list_at_index_4 * value_of_second_list_at_index_4;
+
+ /*
+  * Calculates the sum of the squares of the first list
+  * using the constants declared in the declaration section of
+  * the program as well as the values inputted by the user in the input
+  * section of the program
+  */
+  sum_of_squares_of_first_list =
+    value_of_first_list_at_index_0 * value_of_first_list_at_index_0 +
+    value_of_first_list_at_index_1 * value_of_first_list_at_index_1 +
+    value_of_first_list_at_index_2 * value_of_first_list_at_index_2 +
+    value_of_first_list_at_index_3 * value_of_first_list_at_index_3 +
+    value_of_first_list_at_index_4 * value_of_first_list_at_index_4;
+
+ /*
+  * Calculates the sum of the squares of the second list
+  * using the constants declared in the declaration section of
+  * the program as well as the values inputted by the user in the input
+  * section of the program
+  */
+  sum_of_squares_of_second_list =
+    value_of_second_list_at_index_0 * value_of_second_list_at_index_0 +
+    value_of_second_list_at_index_1 * value_of_second_list_at_index_1 +
+    value_of_second_list_at_index_2 * value_of_second_list_at_index_2 +
+    value_of_second_list_at_index_3 * value_of_second_list_at_index_3 +
+    value_of_second_list_at_index_4 * value_of_second_list_at_index_4;
+
+ /*
+  * Calculates the correlation coefficient of both lists
+  * using the constants declared in the declaration section of
+  * the program as well as the values inputted by the user in the input
+  * section of the program
+  */
+  correlation_coefficient_of_both_lists =
+   (length_of_a_single_list *
+    sum_of_products -
+    sum_of_first_list *
+    sum_of_second_list) /
+   (sqrt(length_of_a_single_list *
+        sum_of_squares_of_first_list -
+        sum_of_first_list *
+        sum_of_first_list) *
+    sqrt(length_of_a_single_list *
+        sum_of_squares_of_second_list -
+        sum_of_second_list *
+        sum_of_second_list));
+
+ /*
+  * OUTPUT SUBSECTION
+  */
+
+ /*
+  * Displays all of the necessary calculations that the holy PDF
+  * instructed me to display
+  */
+  printf("The first list of values:\n");
+  printf("%f %f %f %f %f\n",
+    value_of_first_list_at_index_0,
+    value_of_first_list_at_index_1,
+    value_of_first_list_at_index_2,
+    value_of_first_list_at_index_3,
+    value_of_first_list_at_index_4);
+  printf("The second list of values:\n");
+  printf("%f %f %f %f %f\n",
+    value_of_first_list_at_index_0,
+    value_of_first_list_at_index_1,
+    value_of_first_list_at_index_2,
+    value_of_first_list_at_index_3,
+    value_of_first_list_at_index_4);
+  printf("The mean of the first list:\n");
+  printf("%f\n", mean_of_first_list);
+  printf("The mean of the second list:\n");
+  printf("%f\n", mean_of_second_list);
+  printf("The variance of the first list:\n");
+  printf("%f\n", variance_of_first_list);
+  printf("The variance of the second list:\n");
+  printf("%f\n", variance_of_second_list);
+  printf("The standard deviation of the first list:\n");
+  printf("%f\n", standard_deviation_of_first_list);
+  printf("The standard deviation of the second list:\n");
+  printf("%f\n", standard_deviation_of_second_list);
+  printf("The standard error of the first list:\n");
+  printf("%f\n", standard_error_of_first_list);
+  printf("The standard error of the second list:\n");
+  printf("%f\n", standard_error_of_second_list);
+  printf("The correlation coefficient between both lists:\n");
+  printf("%f\n", correlation_coefficient_of_both_lists);
+
+ /*
+  * RETURN SUBSECTION
+  */
+
+ /*
+  * Informs the compiler that the program successfully exited with the
+  * specified return code
+  */
+  return 0;
+} /* main */kennedy:vu0062> make clean
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+kennedy:vu0062> make statistics
+gcc -o statistics statistics.c -lm
+kennedy:vu0062> statistics
+You will now be asked for two lists of numbers from
+which some meaningful statistical data will be
+generated from. You will then read the data because
+it took me alot of effort generating it.
+Please enter the first list of numbers with spaces
+between the numbers.
+111.25 122.25 133.25 144.25 155.25
+Please enter the second list of numbers with spaces
+between the numbers.
+214.75 225.00 236.25 247.50 258.75
+The first list of values:
+111.250000 122.250000 133.250000 144.250000 155.250000
+The second list of values:
+111.250000 122.250000 133.250000 144.250000 155.250000
+The mean of the first list:
+133.250000
+The mean of the second list:
+236.449997
+The variance of the first list:
+302.500000
+The variance of the second list:
+305.356262
+The standard deviation of the first list:
+17.392527
+The standard deviation of the second list:
+17.474445
+The standard error of the first list:
+7.778174
+The standard error of the second list:
+7.814809
+The correlation coefficient between both lists:
+0.999826
+kennedy:vu0062> sat[K[K[Kstatitics[K[K[K[K[K[K[K[K[Kstatistics
+You will now be asked for two lists of numbers from
+which some meaningful statistical data will be
+generated from. You will then read the data because
+it took me alot of effort generating it.
+Please enter the first list of numbers with spaces
+between the numbers.
+1 2 3 4 5
+Please enter the second list of numbers with spaces
+between the numbers.
+5 6 7 8 9
+The first list of values:
+1.000000 2.000000 3.000000 4.000000 5.000000
+The second list of values:
+1.000000 2.000000 3.000000 4.000000 5.000000
+The mean of the first list:
+3.000000
+The mean of the second list:
+7.000000
+The variance of the first list:
+2.500000
+The variance of the second list:
+2.500000
+The standard deviation of the first list:
+1.581139
+The standard deviation of the second list:
+1.581139
+The standard error of the first list:
+0.707107
+The standard error of the second list:
+0.707107
+The correlation coefficient between both lists:
+1.000000
+kennedy:vu0062> statistics
+You will now be asked for two lists of numbers from
+which some meaningful statistical data will be
+generated from. You will then read the data because
+it took me alot of effort generating it.
+Please enter the first list of numbers with spaces
+between the numbers.
+2 4 6 8 10
+Please enter the second list of numbers with spaces
+between the numbers.
+1 3 5 7 9
+The first list of values:
+2.000000 4.000000 6.000000 8.000000 10.000000
+The second list of values:
+2.000000 4.000000 6.000000 8.000000 10.000000
+The mean of the first list:
+6.000000
+The mean of the second list:
+5.000000
+The variance of the first list:
+10.000000
+The variance of the second list:
+10.000000
+The standard deviation of the first list:
+3.162278
+The standard deviation of the second list:
+3.162278
+The standard error of the first list:
+1.414214
+The standard error of the second list:
+1.414214
+The correlation coefficient between both lists:
+1.000000
+kennedy:vu0062> ^Dexit
+
+Script done on Tue 04 Oct 2022 04:57:27 PM CDT

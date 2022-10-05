@@ -1,0 +1,188 @@
+Script started on Wed 28 Sep 2022 03:16:56 PM CDT
+polk:vu0062> pwd
+/oushomes/Student/vu0062/CS1313
+polk:vu0062> ls -l
+total 56
+drwx------. 2 vu0062 students 4096 Sep 28 15:16 .
+drwx-----x. 7 vu0062 students 4096 Sep 19 13:11 ..
+-rw-r--r--. 1 vu0062 students 3483 Sep 28 13:08 circlecalc.c
+-rw-r--r--. 1 vu0062 students  465 Sep 28 12:26 makefile
+-rw-r--r--. 1 vu0062 students  465 Sep 28 12:26 makefile~
+-rw-r--r--. 1 vu0062 students 3908 Aug 27 16:36 my_number.c
+-rw-r--r--. 1 vu0062 students 3908 Aug 27 16:35 my_number.c~
+-rw-r--r--. 1 vu0062 students 5594 Aug 29 11:03 pp1.txt
+-rw-r--r--. 1 vu0062 students 4247 Sep 19 17:47 pp2_example.txt
+-rw-r--r--. 1 vu0062 students    0 Sep 28 15:16 pp3_example.txt
+-rwxr-xr-x. 1 vu0062 students 7299 Sep 19 17:46 read_list
+-rw-r--r--. 1 vu0062 students 2808 Sep 19 13:59 read_list.c
+polk:vu0062> cat makefile
+
+conversions:	conversions.c
+		gcc -o conversions conversions.c -lm
+
+statistics:	statistics.c
+		gcc -o statistics statistics.c -lm
+
+circlecalc:	circlecalc.c
+		gcc -o circlecalc circlecalc.c -lm
+
+census:		census.c
+		gcc -o census census.c
+
+read_list:	read_list.c
+		gcc -o read_list read_list.c
+
+my_number:	my_number.c
+		gcc -o my_number my_number.c
+
+clean:	
+		rm -f my_number
+		rm -f read_list
+		rm -f census
+		rm -f conversions
+		rm -f statistics
+		rm -f circlecalc
+polk:vu0062> cat circlecalc.c
+
+/*
+ * Project #3:    Example Program for PP#3
+ * Program:       circlecalc
+ * Author:        Nathan Vu (nathan.v.vu-1@ou.edu)
+ * Class:         CS1313 010 Programming for Non-Majors in C
+ * Lab:           Sec 010 Fridays 10:30am
+ * Description:   Copy of Dr. Neemans example program hand copied line
+ *                by line from the CS1313 Lesson named "Artihmetic
+ *                Expressions Lesson #1" on slide 8 @ cs1313.ou.edu
+ */
+
+#include <stdio.h>
+
+int main ()
+{ /* main */
+
+ /*
+  * DECLARATION SECTION
+  */
+
+ /*
+  * VARIABLE SUBSECTION
+  * 
+  * pi:                     
+  *                         The mathematical constant the represents
+  *                         the ratio of a circle's circumference to
+  *                         its diameter should be this.
+  *                         https://en.wikipedia.org/wiki/Pi
+  * diameter_factor:
+  *                         The factor of a complete circle's angle
+  *                         expressed in radians divided by the variable
+  *                         above should be this.
+  *                         https://en.wikipedia.org/wiki/Exit_status
+  * program_success_code:
+  *                         The exit status of the child process this
+  *                         program creates when executed should be this.
+  * radius:
+  *                         The client's input for the radius of their
+  *                         desired circle should be this.
+  * circumference:
+  *                         The arc length of the circle as if it were
+  *                         opened up and straighted out to a line
+  *                         segment should be this.
+  *                         https://en.wikipedia.org/wiki/Circumference
+  * area:
+  *                         The quantity that expresses the extent
+  *                         of the cirlce on a regular mathematical
+  *                         plane should be this.
+  *                         https://en.wikipedia.org/wiki/Area
+  */
+
+  const float pi = 3.1415926;
+  const float diameter_factor = 2.0;
+  const int program_success_code = 0;
+  float radius, circumference, area;
+
+ /*
+  * EXECUTION SECTION
+  */
+
+ /*
+  * GREETING SUBSECTION
+  */
+
+ /*
+  * Informs the client of what the program does
+  */
+  printf("I'm going to calculate a circle's\n");
+  printf("circumference and area.\n");
+
+ /*
+  * INPUT SUBSECTION
+  */
+
+ /*
+  * Promps the client of the radius of their desired circle
+  */
+  printf("What's the radius of the circle?\n");
+
+ /*
+  * Inputs the value of the radius mentioned in the comment above
+  */
+  scanf("%f", &radius);
+
+ /*
+  * Calculates the circumference of the client's circle using the
+  * constants decalred in the declaration section as well as the
+  * radius inputed above
+  */
+  circumference = pi * radius * diameter_factor;
+
+ /*
+  * Calculates the area of the client's circle using a constant
+  * declared in the declaration section as well as the radius
+  * inputed two statements above this one
+  */
+  area = pi * radius * radius;
+
+ /*
+  * OUTPUT SUBSECTION
+  */
+
+ /*
+  * Outputs the circumference of the client's circle to the terminal
+  * window
+  */
+  printf("The circumference is %f\n", circumference);
+
+ /*
+  * Outputs the area of the client's circle to the terminal window
+  */
+  printf(" and the area is %f.\n", area);
+
+ /*
+  * RETURN SUBSECTION
+  */
+
+ /*
+  * Informs the compiler that the program successfully exited with
+  * the specified return code
+  */
+  return program_success_code;
+
+} /* main */polk:vu0062> make clean
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+polk:vu0062> amk[K[K[Kmake circlecalc
+gcc -o circlecalc circlecalc.c -lm
+polk:vu0062> circlecalc
+I'm going to calculate a circle's
+circumference and area.
+What's the radius of the circle?
+5
+The circumference is 31.415924
+ and the area is 78.539810.
+polk:vu0062> ^Dexit
+
+Script done on Wed 28 Sep 2022 03:17:43 PM CDT
