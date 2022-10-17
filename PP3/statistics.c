@@ -452,11 +452,11 @@ int main()
     value_of_first_list_at_index_4);
   printf("The second list of values:\n");
   printf("%f %f %f %f %f\n",
-    value_of_first_list_at_index_0,
-    value_of_first_list_at_index_1,
-    value_of_first_list_at_index_2,
-    value_of_first_list_at_index_3,
-    value_of_first_list_at_index_4);
+    value_of_second_list_at_index_0,
+    value_of_second_list_at_index_1,
+    value_of_second_list_at_index_2,
+    value_of_second_list_at_index_3,
+    value_of_second_list_at_index_4);
   printf("The mean of the first list:\n");
   printf("%f\n", mean_of_first_list);
   printf("The mean of the second list:\n");
