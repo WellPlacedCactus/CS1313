@@ -110,7 +110,8 @@ int main()
     * invalid
     */
     exit(program_failure_code);
-  }
+
+  } /* if ((data_type_code != int_code) && (data_type_code != float_code)) */
 
  /*
   * The data type of the variables used depends on the users data type
@@ -127,7 +128,8 @@ int main()
     * Inputs the int value mentioned above
     */
     scanf("%d", &int_input_value);
-  }
+
+  } /* if (data_type_code == int_code) */
   else if (data_type_code == float_code) {
 
    /*
@@ -139,7 +141,8 @@ int main()
     * Inputs the float value mentioned above
     */
     scanf("%f", &float_input_value);
-  }
+
+  } /* if (data_type_code == float_code) */
 
  /*
   * The variables used depends on the data type code that the user
@@ -157,15 +160,17 @@ int main()
       * Performs the negation operation on the int input value
       */
       int_output_value = -int_input_value;
-    }
+
+    } /* if (int_input_value < 0) */
     else {
 
      /*
       * Performs the identity operation on the int input value
       */
       int_output_value = +int_input_value;
-    }
-  }
+    } /* if (int_input_value < 0)...else */
+
+  } /* if (data_type_code == int_code) */
   else if (data_type_code == float_code) {
 
    /*
@@ -178,15 +183,18 @@ int main()
       * Performs the negation operation on the float input value
       */
       float_output_value = -float_input_value;
-    }
+
+    } /* if (float_input_value < 0) */
     else {
 
      /*
       * Performs the identity operation on the float input value
       */
       float_output_value = +float_input_value;
-    }
-  }
+
+    } /* if (float_input_value < 0)...else */
+
+  } /* if (data_type_code == float_code) */
 
  /*
   * The value that is printed out to the terminal depends on the data
@@ -200,7 +208,8 @@ int main()
     printf("The absolute value of %d is %d\n",
       int_input_value,
       int_output_value);
-  }
+
+  } /* if (data_type_code == int_code) */
   else if (data_type_code == float_code) {
 
    /*
@@ -209,7 +218,8 @@ int main()
     printf("The absolute value of %f is %f\n",
       float_input_value,
       float_output_value);
-  }
+
+  } /* if (data_type_code == float_code) */
 
  /*
   * RETURN SUBSECTION
