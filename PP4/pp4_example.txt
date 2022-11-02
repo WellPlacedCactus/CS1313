@@ -1,0 +1,346 @@
+Script started on Tue 25 Oct 2022 04:16:08 PM CDT
+polk:vu0062> pwd
+/oushomes/Student/vu0062/CS1313
+polk:vu0062> ls -l
+total 132
+drwx------. 2 vu0062 students  4096 Oct 25 16:16 .
+drwx-----x. 9 vu0062 students  4096 Oct  4 02:09 ..
+-rw-r--r--. 1 vu0062 students  6171 Oct 25 16:12 absvalbytype.c
+-rw-r--r--. 1 vu0062 students  3483 Sep 28 13:08 circlecalc.c
+-rw-r--r--. 1 vu0062 students  5587 Oct  4 16:46 conversions.c
+-rw-r--r--. 1 vu0062 students   557 Oct 18 16:21 makefile
+-rw-r--r--. 1 vu0062 students   557 Oct 18 16:21 makefile~
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:36 my_number.c
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:35 my_number.c~
+-rw-r--r--. 1 vu0062 students  5594 Aug 29 11:03 pp1.txt
+-rw-r--r--. 1 vu0062 students  4247 Sep 19 17:47 pp2_example.txt
+-rw-r--r--. 1 vu0062 students  9186 Oct  4 16:50 pp3_conversions.txt
+-rw-r--r--. 1 vu0062 students  5469 Sep 28 15:17 pp3_example.txt
+-rw-r--r--. 1 vu0062 students 24656 Oct  4 16:57 pp3_statistics.txt
+-rw-r--r--. 1 vu0062 students     0 Oct 25 16:16 pp4_example.txt
+-rw-r--r--. 1 vu0062 students  2808 Sep 19 13:59 read_list.c
+-rw-r--r--. 1 vu0062 students 19133 Oct  4 16:54 statistics.c
+polk:vu0062> cat makefile
+
+absvalbytype:absvalbytype.c
+gcc -o absvalbytype absvalbytype.c -lm
+
+conversions:conversions.c
+gcc -o conversions conversions.c -lm
+
+statistics:statistics.c
+gcc -o statistics statistics.c -lm
+
+circlecalc:circlecalc.c
+gcc -o circlecalc circlecalc.c -lm
+
+census:census.c
+gcc -o census census.c
+
+read_list:read_list.c
+gcc -o read_list read_list.c
+
+my_number:my_number.c
+gcc -o my_number my_number.c
+
+clean:
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+rm -f absvalbytype
+polk:vu0062> cat absvalbytype.c
+
+/*
+ * Project #4:  Example Program for Fourth Programming Project
+ * Program:     absvalbytype
+ * Author:      Nathan Vu (nathan.v.vu-1@ou.edu)
+ * Class:       CS1313 010 Programming for Non-Majors in C, Fall 2022
+ * Lab:         Sec 010 Fridays 10:30am
+ * Description: A handwritten copy of Dr. Neeman's program from
+ *              slides 37 to 40 in the slideshow linked below:
+ *              http://cs1313.ou.edu/if_lesson1.pdf
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{ /* main */
+
+   /*
+    * DECLARATION SECTION
+    */
+
+   /*
+    * NAMED CONSTANT SUBSECTION
+    * 
+    * int_code:
+    *                     The user input code for the choice of
+    *                     "integer" should be this.
+    * float_code:
+    *                     The user input code for the choice of
+    *                     "float" should be this.
+    * program_failure_code:
+    *                     The program return code in a case of a
+    *                     failure should be this.
+    * program_success_code:
+    *                     The program return code in a case of a
+    *                     success should be this.
+    */
+
+    const int int_code = 1;
+    const int float_code = 2;
+    const int program_failure_code = -1;
+    const int program_success_code = 1;
+
+   /*
+    * VARIABLE SUBSECTION
+    * 
+    * float_input_value:
+    *                    The client's float input value should be
+    *                    this.
+    * float_output_value:
+    *                    The client's float output value should be
+    *                    this.
+    * int_input_value:
+    *                    The client's int input value should be this.
+    * int_output_value:
+    *                    The client's int output value should be this.
+    * data_type_code:
+    *                    The client's choice for datatype represented
+    *                    as an integer should be this.
+    */
+
+    float   float_input_value;
+    float   float_output_value;
+    int     int_input_value;
+    int     int_output_value;
+    int     data_type_code;
+
+   /*
+    * EXECUTION SECTION
+    */
+
+   /*
+    * GREETING SUBSECTION
+    */
+
+   /*
+    * Informs the user of the purpose of the program
+    */
+    printf("I'm going to calculate the absolute value\n");
+    printf("of a number that you input.\n");
+
+   /*
+    * INPUT SUBSECTION
+    */
+
+   /*
+    * Prompts the user to input a code for the number type
+    */
+    printf("Would you like to input an int or a float?\n");
+    printf("(Enter %d for an int or %d for a float.)\n",
+        int_code,
+        float_code);
+
+   /*
+    * Inputs the users prefered number type code
+    */
+    scanf("%d", &data_type_code);
+
+   /*
+    * Idiot proof the data type code
+    */
+    if ((data_type_code != int_code) &&
+        (data_type_code != float_code)) {
+        
+       /*
+        * Print out the idiotproof error message
+        */
+        printf("ERROR: I don't recognize data type code %d\n",
+            data_type_code);
+
+       /*
+        * Exit the program with the fail code because the data type code
+        * invalid
+        */
+        exit(program_failure_code);
+
+    } /* if ((data_type_code != int_code)... */
+
+   /*
+    * The data type of the variables used depends on the users data type
+    * code
+    */
+    if (data_type_code == int_code) {
+
+       /*
+        * Prompts the client of the int value they want
+        */
+        printf("What is the int value?\n");
+
+       /*
+        * Inputs the int value mentioned above
+        */
+        scanf("%d", &int_input_value);
+
+    } /* if (data_type_code == int_code) */
+    else if (data_type_code == float_code) {
+
+       /*
+        * Prompts the user of the float value they want
+        */
+        printf("What is the float value?\n");
+
+       /*
+        * Inputs the float value mentioned above
+        */
+        scanf("%f", &float_input_value);
+
+    } /* if (data_type_code == float_code) */
+
+   /*
+    * The variables used depends on the data type code that the user
+    * entered
+    */
+    if (data_type_code == int_code) {
+
+       /*
+        * The operation performed on the int output value depends on the
+        * sign of the int input value
+        */
+        if (int_input_value < 0) {
+
+           /*
+            * Performs the negation operation on the int input value
+            */
+            int_output_value = -int_input_value;
+
+        } /* if (int_input_value < 0) */
+        else {
+
+           /*
+            * Performs the identity operation on the int input value
+            */
+            int_output_value = +int_input_value;
+        } /* if (int_input_value < 0)...else */
+
+    } /* if (data_type_code == int_code) */
+    else if (data_type_code == float_code) {
+
+       /*
+        * The operation performed on the float output value depends on the
+        * sign of the float input value
+        */
+        if (float_input_value < 0) {
+
+           /*
+            * Performs the negation operation on the float input value
+            */
+            float_output_value = -float_input_value;
+
+        } /* if (float_input_value < 0) */
+        else {
+
+           /*
+            * Performs the identity operation on the float input value
+            */
+            float_output_value = +float_input_value;
+
+        } /* if (float_input_value < 0)...else */
+
+    } /* if (data_type_code == float_code) */
+
+   /*
+    * The value that is printed out to the terminal depends on the data
+    * type code
+    */
+    if (data_type_code == int_code) {
+
+       /*
+        * Prints out the integer value and its absolute value
+        */
+        printf("The absolute value of %d is %d\n",
+            int_input_value,
+            int_output_value);
+
+    } /* if (data_type_code == int_code) */
+    else if (data_type_code == float_code) {
+
+       /*
+        * Prints out the float value and its absolute value
+        */
+        printf("The absolute value of %f is %f\n",
+            float_input_value,
+            float_output_value);
+
+    } /* if (data_type_code == float_code) */
+
+   /*
+    * RETURN SUBSECTION
+    */
+
+   /*
+    * Exits the program with the success return code
+    */
+    return program_success_code;
+
+} /* main */polk:vu0062> make clean
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+rm -f absvalbytype
+polk:vu0062> make absvalbytype.
+gcc -o absvalbytype absvalbytype.c -lm
+polk:vu0062> absvalbytype
+I'm going to calculate the absolute value
+of a number that you input.
+Would you like to input an int or a float?
+(Enter 1 for an int or 2 for a float.)
+0
+ERROR: I don't recognize data type code 0
+polk:vu0062> absvalbytype
+I'm going to calculate the absolute value
+of a number that you input.
+Would you like to input an int or a float?
+(Enter 1 for an int or 2 for a float.)
+1
+What is the int value?
+5
+The absolute value of 5 is 5
+polk:vu0062> absvalbytype
+I'm going to calculate the absolute value
+of a number that you input.
+Would you like to input an int or a float?
+(Enter 1 for an int or 2 for a float.)
+1
+What is the int value?
+-5
+The absolute value of -5 is 5
+polk:vu0062> absvalbytype
+I'm going to calculate the absolute value
+of a number that you input.
+Would you like to input an int or a float?
+(Enter 1 for an int or 2 for a float.)
+2
+What is the float value?
+5.5
+The absolute value of 5.500000 is 5.500000
+polk:vu0062> absvalbytype
+I'm going to calculate the absolute value
+of a number that you input.
+Would you like to input an int or a float?
+(Enter 1 for an int or 2 for a float.)
+2
+What is the float value?
+-5.5
+The absolute value of -5.500000 is 5.500000
+polk:vu0062> ^Dexit
+
+Script done on Tue 25 Oct 2022 04:17:34 PM CDT
