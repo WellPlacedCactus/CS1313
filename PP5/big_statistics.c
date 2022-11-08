@@ -1,7 +1,7 @@
 
 /*
  * Project #5:  Big Statistics Calculator
- * Program:     big_stats
+ * Program:     big_statistics
  * Author:      Nathan Vu (nathan.v.vu-1@ou.edu)
  * Class:       CS1313 010 Programming for Non-Majors in C, Fall 2022
  * Lab:         Sec 010 Fridays 10:30am
