@@ -1,0 +1,421 @@
+Script started on Mon 07 Nov 2022 09:35:57 PM CST
+polk:vu0062> pwd
+/oushomes/Student/vu0062/CS1313
+polk:vu0062> ls -l
+total 260
+drwx------. 2 vu0062 students  4096 Nov  7 21:35 .
+drwx-----x. 9 vu0062 students  4096 Oct  4 02:09 ..
+-rw-r--r--. 1 vu0062 students  6171 Oct 25 16:12 absvalbytype.c
+-rw-r--r--. 1 vu0062 students  3483 Sep 28 13:08 circlecalc.c
+-rw-r--r--. 1 vu0062 students  5587 Oct  4 16:46 conversions.c
+-rw-r--r--. 1 vu0062 students  2238 Nov  2 17:14 hw11.c
+-rw-r--r--. 1 vu0062 students  4907 Nov  2 17:15 hw11.txt
+-rw-r--r--. 1 vu0062 students 26631 Oct 25 16:25 italian.c
+-rw-r--r--. 1 vu0062 students 26630 Oct 25 16:24 italian.c~
+-rw-r--r--. 1 vu0062 students   846 Nov  7 16:00 makefile
+-rw-r--r--. 1 vu0062 students   846 Nov  7 15:59 makefile~
+-rw-r--r--. 1 vu0062 students  7267 Nov  7 21:23 mean_dynamic.c
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:36 my_number.c
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:35 my_number.c~
+-rw-r--r--. 1 vu0062 students  5594 Aug 29 11:03 pp1.txt
+-rw-r--r--. 1 vu0062 students  4247 Sep 19 17:47 pp2_example.txt
+-rw-r--r--. 1 vu0062 students  9186 Oct  4 16:50 pp3_conversions.txt
+-rw-r--r--. 1 vu0062 students  5469 Sep 28 15:17 pp3_example.txt
+-rw-r--r--. 1 vu0062 students 24656 Oct  4 16:57 pp3_statistics.txt
+-rw-r--r--. 1 vu0062 students  9398 Oct 25 16:17 pp4_example.txt
+-rw-r--r--. 1 vu0062 students 38125 Oct 25 16:39 pp4.txt
+-rw-r--r--. 1 vu0062 students     0 Nov  7 21:35 pp5_example.txt
+-rw-r--r--. 1 vu0062 students  2808 Sep 19 13:59 read_list.c
+-rw-r--r--. 1 vu0062 students 19133 Oct  4 16:54 statistics.c
+polk:vu0062> cat makefile
+
+big_stats:big_stats.c
+gcc -o big_stats big_stats.c -lm
+
+mean_dynamic:mean_dynamic.c
+gcc -o mean_dynamic mean_dynamic.c -lm
+
+hw11:hw11.c
+gcc -o hw11 hw11.c -lm
+
+italian:italian.c
+gcc -o italian italian.c -lm
+
+absvalbytype:absvalbytype.c
+gcc -o absvalbytype absvalbytype.c -lm
+
+conversions:conversions.c
+gcc -o conversions conversions.c -lm
+
+statistics:statistics.c
+gcc -o statistics statistics.c -lm
+
+circlecalc:circlecalc.c
+gcc -o circlecalc circlecalc.c -lm
+
+census:census.c
+gcc -o census census.c
+
+read_list:read_list.c
+gcc -o read_list read_list.c
+
+my_number:my_number.c
+gcc -o my_number my_number.c
+
+clean:
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+rm -f absvalbytype
+rm -f italian
+rm -f hw11
+rm -f mean_dynamic
+rm -f big_stats
+polk:vu0062> cat mean_dynamic.c
+
+/* 
+ * Project #5:  Project 5 Example Program
+ * Program:     mean_dynamic
+ * Author:      Nathan Vu (nathan.v.vu-1@ou.edu)
+ * Class:       CS1313 010 Programming for Non-Majors in C, Fall 2022
+ * Lab:         Sec 010 Fridays 10:30am
+ * Description: Copied directly from slide 18 of the slideshow linked
+ *              below.
+ *              http://cs1313.ou.edu/array_lesson3.pdf
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{ /* main */
+
+   /*
+    * DECLARATION SECTION
+    */
+
+   /*
+    * NAMED CONSTANT SUBSECTION
+    * 
+    *   initial_sum:
+    *       The number representing the sum of the list initially
+    * 
+    *   minimum_number_of_elements:
+    *       The number of elements inside an array
+    * 
+    *   first_element:
+    *       The number representing the first index of an array
+    * 
+    *   program_success_code:
+    *       The return code that represents a success
+    * 
+    *   program_failure_code:
+    *       The return code that represents a failure
+    */
+
+    const float initial_sum = 0.0;
+    const int   minimum_number_of_elements = 1;
+    const int   first_element = 0;
+    const int   program_success_code = 0;
+    const int   program_failure_code = -1;
+
+   /*
+    * VARIABLE SUBSECTION
+    *
+    *   list1_input_value:
+    *       The array representing the first list of numbers
+    * 
+    *   list2_input_value:
+    *       The array representing the second list of numbers
+    * 
+    *   list1_input_value_sum:
+    *       The numerical value representing the sum of the first list
+    *
+    *   mean1:
+    *       The numerical value representing the mean of the first list
+    * 
+    *   list2_input_value_sum:
+    *       The numerical value representing the sum of the second list
+    * 
+    *   mean2:
+    *       The numerical value representing the mean of the second
+    *       list
+    * 
+    *   number_of_elements:
+    *       The numerical value representing the number of elements in
+    *       each list
+    * 
+    *   element:
+    *       An in used as the control variable in all of the for loops
+    */
+
+    float*  list1_input_value = (float*)NULL;
+    float*  list2_input_value = (float*)NULL;
+    float   list1_input_value_sum, mean1;
+    float   list2_input_value_sum, mean2;
+    int     number_of_elements;
+    int     element;
+
+   /*
+    * EXECUTION SECTION
+    */
+
+   /*
+    * GREETING SUBSECTION
+    */
+
+   /*
+    * Greets the user
+    */
+    printf("I am going to calculate the mean of a pair of lists of\n");
+    printf("values that you input. These lists will have the same\n");
+    printf("input length.\n");
+
+   /*
+    * INPUT SUBSECTION
+    */
+
+   /*
+    * Prompts the user for the number of elements in each list
+    */
+    printf("How many values would you like to calculate the mean\n");
+    printf("in each list?\n");
+
+   /*
+    * Inputs the number of elements in each list
+    */
+    scanf("%d", &number_of_elements);
+
+   /*
+    * Idiotproof the number of elements
+    */
+    if (number_of_elements < minimum_number_of_elements) {
+        
+       /*
+        * Print out a relevant error message
+        */
+        printf("ERROR: You cannot calculate the mean of %d values.\n",
+            number_of_elements);
+
+       /*
+        * Exits the program
+        */
+        exit(program_failure_code);
+
+    } /* if (number_of_elements... */
+
+   /*
+    * Allocates memory for the first list using the number of elements
+    */
+    list1_input_value = (float*)malloc(sizeof(float) * number_of_elements);
+    
+   /*
+    * Checks if memory allocation was successful
+    */
+    if (list1_input_value == (float*)NULL) {
+
+       /*
+        * Prints out a relevant error message
+        */
+        printf("ERROR: Could not allocate the first float array\n");
+        printf("of length %d.\n", number_of_elements);
+        
+       /*
+        * Exits the program
+        */
+        exit(program_failure_code);
+
+    } /* if (list1_input_value... */
+
+   /*
+    * Allocates memory for the second list
+    */
+    list2_input_value = (float*)malloc(sizeof(float) * number_of_elements);
+
+   /*
+    * Checks if memory allocation was successful
+    */
+    if (list2_input_value == (float*)NULL) {
+
+       /*
+        * Prints out a relevant error message
+        */
+        printf("ERROR: Could not allocate the second float array\n");
+        printf("of length %d.\n", number_of_elements);
+
+       /*
+        * Exits the program
+        */
+        exit(program_failure_code);
+
+    } /* if (list2_input_value... */
+
+   /*
+    * Prompts the user of the number pairs in lists
+    */
+    printf("What are the pairs of lists of %d values to calculate\n",
+        number_of_elements);
+    printf("the mean of?\n");
+
+   /*
+    * Iterates over the list
+    */
+    for (element = first_element;
+        element < number_of_elements; element++) {
+
+       /*
+        * Inputs the value pair at the index of element
+        */
+        scanf("%f %f",
+            &list1_input_value[element],
+            &list2_input_value[element]);
+
+    } /* for element */
+
+   /*
+    * CALCULATION SUBSECTION
+    */
+
+   /*
+    * Sets the sum of the first list to nothing
+    */
+    list1_input_value_sum = initial_sum;
+    
+   /*
+    * Iterates over the first list
+    */
+    for (element = first_element;
+        element < number_of_elements; element++) {
+
+       /*
+        * Adds the current element to the total sum
+        */
+        list1_input_value_sum += list1_input_value[element];
+
+    } /* for element */
+
+   /*
+    * Calculates the mean of the first list
+    */
+    mean1 = list1_input_value_sum / number_of_elements;
+
+   /*
+    * Sets the sum of list two to nothing
+    */
+    list2_input_value_sum = initial_sum;
+
+   /*
+    * Loops through each element in the second list
+    */
+    for (element = first_element;
+        element < number_of_elements; element++) {
+
+       /*
+        * Adds the current element to the sum of the two lists
+        */
+        list2_input_value_sum += list2_input_value[element];
+
+    } /* for element */
+
+   /*
+    * Calculates the mean of the second list
+    */
+    mean2 = list2_input_value_sum / number_of_elements;
+
+   /*
+    * OUTPUT SUBSECTION
+    */
+
+   /*
+    * Prepares the user to see the two lists
+    */
+    printf("There %d pairs of input values are:\n", number_of_elements);
+
+   /*
+    * Loops through both lists
+    */
+    for (element = first_element;
+        element < number_of_elements; element++) {
+        
+       /*
+        * Prints the values of each list at the index of element
+        */
+        printf("%f %f\n",
+            list1_input_value[element],
+            list2_input_value[element]);
+
+    } /* for element */
+
+   /*
+    * Outputs the means of both lists
+    */
+    printf("The mean of the first list is %f\n", mean1);
+    printf("The mean of the second list is %f\n", mean2);
+
+   /*
+    * Frees the values of list two from memory
+    */
+    free(list2_input_value);
+
+   /*
+    * Sets the pointer of list two to null
+    */
+    list2_input_value = (float*)NULL;
+
+   /*
+    * Frees the values of list one from memory
+    */
+    free(list1_input_value);
+    
+   /*
+    * Sets the pointer of list one to null
+    */
+    list1_input_value = (float*)NULL;
+
+   /*
+    * Returns a successful code
+    */
+    return program_success_code;
+
+} /* main */polk:vu0062> make clean
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+rm -f absvalbytype
+rm -f italian
+rm -f hw11
+rm -f mean_dynamic
+rm -f big_stats
+polk:vu0062> make mean_dynamic
+gcc -o mean_dynamic mean_dynamic.c -lm
+polk:vu0062> mean_dynamic
+I am going to calculate the mean of a pair of lists of
+values that you input. These lists will have the same
+input length.
+How many values would you like to calculate the mean
+in each list?
+5
+What are the pairs of lists of 5 values to calculate
+the mean of?
+1.1 11.11
+2.2 22.22
+3.3 33.33
+4.4 44.44
+9.9 99.99
+There 5 pairs of input values are:
+1.100000 11.110000
+2.200000 22.219999
+3.300000 33.330002
+4.400000 44.439999
+9.900000 99.989998
+The mean of the first list is 4.180000
+The mean of the second list is 42.217999
+polk:vu0062> ^Dexit
+
+Script done on Mon 07 Nov 2022 09:36:49 PM CST
