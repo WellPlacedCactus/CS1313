@@ -182,7 +182,7 @@ int main()
         * Prints out a relevant error message
         */
         printf("ERROR: Idiocy detected. You cannot have a length\n");
-        printf("of %d", length);
+        printf("of %d\n", length);
 
        /*
         * Exits the program with a bad return code
