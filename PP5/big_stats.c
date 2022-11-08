@@ -419,22 +419,25 @@ int main()
    /*
     * Calculates the numerator of the correlation coefficient
     */
-    correlation_coefficient_numerator = (length *
-        sum_products - sum1 * sum2);
+    correlation_coefficient_numerator =
+        length *
+        sum_products -
+        sum1 *
+        sum2;
 
    /*
     * Calculates the denominator of the correlation coefficient
     */
-    correlation_coefficient_denominator = sqrt(
-        (length * sum_squares1 - pow(sum1, 2)) *
-        (length * sum_squares2 - pow(sum2, 2))
-    );
+    correlation_coefficient_denominator =
+        sqrt((length * sum_squares1 - pow(sum1, 2)) *
+             (length * sum_squares2 - pow(sum2, 2)));
 
    /*
     * Calculates the correlation coefficient
     */
-    correlation_coefficient = (correlation_coefficient_numerator /
-        correlation_coefficient_denominator);
+    correlation_coefficient =
+        correlation_coefficient_numerator /
+        correlation_coefficient_denominator;
 
    /*
     * OUTPUT SUBSECTION
