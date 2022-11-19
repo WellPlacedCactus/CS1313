@@ -1,0 +1,1007 @@
+Script started on Tue 08 Nov 2022 03:56:22 PM CST
+kennedy:vu0062> pwd
+/oushomes/Student/vu0062/CS1313
+kennedy:vu0062> ls -l
+total 288
+drwx------. 2 vu0062 students  4096 Nov  8 15:56 .
+drwx-----x. 9 vu0062 students  4096 Oct  4 02:09 ..
+-rw-r--r--. 1 vu0062 students  6171 Oct 25 16:12 absvalbytype.c
+-rw-r--r--. 1 vu0062 students 13183 Nov  8 15:46 big_statistics.c
+-rw-r--r--. 1 vu0062 students  3483 Sep 28 13:08 circlecalc.c
+-rw-r--r--. 1 vu0062 students  5587 Oct  4 16:46 conversions.c
+-rw-r--r--. 1 vu0062 students  2238 Nov  2 17:14 hw11.c
+-rw-r--r--. 1 vu0062 students  4907 Nov  2 17:15 hw11.txt
+-rw-r--r--. 1 vu0062 students 26631 Oct 25 16:25 italian.c
+-rw-r--r--. 1 vu0062 students 26630 Oct 25 16:24 italian.c~
+-rw-r--r--. 1 vu0062 students   871 Nov  8 15:55 makefile
+-rw-r--r--. 1 vu0062 students   871 Nov  8 15:55 makefile~
+-rw-r--r--. 1 vu0062 students  7267 Nov  7 21:23 mean_dynamic.c
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:36 my_number.c
+-rw-r--r--. 1 vu0062 students  3908 Aug 27 16:35 my_number.c~
+-rw-r--r--. 1 vu0062 students  5594 Aug 29 11:03 pp1.txt
+-rw-r--r--. 1 vu0062 students  4247 Sep 19 17:47 pp2_example.txt
+-rw-r--r--. 1 vu0062 students  9186 Oct  4 16:50 pp3_conversions.txt
+-rw-r--r--. 1 vu0062 students  5469 Sep 28 15:17 pp3_example.txt
+-rw-r--r--. 1 vu0062 students 24656 Oct  4 16:57 pp3_statistics.txt
+-rw-r--r--. 1 vu0062 students  9398 Oct 25 16:17 pp4_example.txt
+-rw-r--r--. 1 vu0062 students 38125 Oct 25 16:39 pp4.txt
+-rw-r--r--. 1 vu0062 students 10586 Nov  7 21:36 pp5_example.txt
+-rw-r--r--. 1 vu0062 students     0 Nov  8 15:56 pp5.txt
+-rw-r--r--. 1 vu0062 students  2808 Sep 19 13:59 read_list.c
+-rw-r--r--. 1 vu0062 students 19133 Oct  4 16:54 statistics.c
+kennedy:vu0062> cat makefile
+
+big_statistics:big_statistics.c
+gcc -o big_statistics big_statistics.c -lm
+
+mean_dynamic:mean_dynamic.c
+gcc -o mean_dynamic mean_dynamic.c -lm
+
+hw11:hw11.c
+gcc -o hw11 hw11.c -lm
+
+italian:italian.c
+gcc -o italian italian.c -lm
+
+absvalbytype:absvalbytype.c
+gcc -o absvalbytype absvalbytype.c -lm
+
+conversions:conversions.c
+gcc -o conversions conversions.c -lm
+
+statistics:statistics.c
+gcc -o statistics statistics.c -lm
+
+circlecalc:circlecalc.c
+gcc -o circlecalc circlecalc.c -lm
+
+census:census.c
+gcc -o census census.c
+
+read_list:read_list.c
+gcc -o read_list read_list.c
+
+my_number:my_number.c
+gcc -o my_number my_number.c
+
+clean:
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+rm -f absvalbytype
+rm -f italian
+rm -f hw11
+rm -f mean_dynamic
+rm -f big_statistics
+kennedy:vu0062> mcat big_statistics.c
+
+/*
+ * Project #5:  Big Statistics Calculator
+ * Program:     big_statistics
+ * Author:      Nathan Vu (nathan.v.vu-1@ou.edu)
+ * Class:       CS1313 010 Programming for Non-Majors in C, Fall 2022
+ * Lab:         Sec 010 Fridays 10:30am
+ * Description: Same program from Programming Project 3 except it
+ *              makes use of arrays to make calculations easier.
+ *              Generates simple statistics calculations using two
+ *              lists of numbers provided through user input by the
+ *              client.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main()
+{
+
+   /*
+    * DECLARATION SECTION
+    */
+
+   /*
+    * NAMED CONSTANT SUBSECTION
+    *
+    *   nothing_float:
+    *       The constant representing the number zero in float form
+    * 
+    *   nothing_int:
+    *       The constant representing the number zero in int form
+    * 
+    *   program_succ_code:
+    *       The return code representing a successful exit
+    * 
+    *   program_fail_code:
+    *       The return code representing a failed exit
+    */
+
+    const float nothing_float       = 0.0;
+    const int   nothing_int         = 0;
+    const int   program_succ_code   = 0;
+    const int   program_fail_code   = -1;
+
+   /*
+    * VARIABLE SUBSECTION
+    *
+    *   list1:
+    *       A pointer to an array representing the first list of
+    *       the user's inputted values
+    * 
+    *   list2:
+    *       A pointer to an array representing the second list of
+    *       the user's inputted values
+    * 
+    *   mean1:
+    *       The numerical value representing the mean
+    *       of the first list
+    * 
+    *   mean2:
+    *       The numerical value representing the mean
+    *       of the second list
+    * 
+    *   variance1:
+    *       The numerical value representing the variance
+    *       of the first list
+    * 
+    *   variance2:
+    *       The numerical value representing the variance
+    *       of the second list
+    * 
+    *   standard_deviation1:
+    *       The numerical value representing the standard deviation
+    *       of the first list
+    * 
+    *   standard_deviation2:
+    *       The numerical value representing the standard deviation
+    *       of the second list
+    * 
+    *   standard_error1:
+    *       The numerical value representing the standard error
+    *       of the first list
+    * 
+    *   standard_error2:
+    *       The numerical value representing the standard error
+    *       of the second list
+    * 
+    *   sum1:
+    *       The numerical value representing the sum
+    *       of the first list
+    * 
+    *   sum2:
+    *       The numerical value representing the sum
+    *       of the second list
+    * 
+    *   sum_squares1:
+    *       The numerical value representing the sum
+    *       of the squares of the first list
+    * 
+    *   sum_squares2:
+    *       The numerical value representing the sum
+    *       of the squares of the second list
+    * 
+    *   variance_numerator1:
+    *       The numerical value representing the numerator
+    *       of the variance of the first list
+    * 
+    *   variance_numerator2:
+    *       The numerical value representing the numerator
+    *       of the variance of the second list
+    * 
+    *   sum_products:
+    *       The numerical value representing the sum
+    *       of the products of both lists
+    * 
+    *   correlation_coefficient_numerator:
+    *       The numerical value representing the numerator of the
+    *       correlation coefficient of both lists
+    * 
+    *   correlation_coefficient_denominator:
+    *       The numerical value representing the denominator of the
+    *       correlation coefficient of both lists
+    * 
+    *   correlation_coefficient:
+    *       The numerical value representing the
+    *       correlation coefficient of both lists
+    * 
+    *   control:
+    *       An integer used as the control variable in all the for loops
+    *       written in this program
+    * 
+    *   length:
+    *       An integer representing the number of elements of both
+    *       of the user's inputted lists
+    * 
+    */
+
+    float*  list1                   = (float*)NULL;
+    float*  list2                   = (float*)NULL;
+    float   mean1;
+    float   mean2;
+    float   variance1;
+    float   variance2;
+    float   standard_deviation1;
+    float   standard_deviation2;
+    float   standard_error1;
+    float   standard_error2;
+    float   sum1;
+    float   sum2;
+    float   sum_squares1;
+    float   sum_squares2;
+    float   variance_numerator1;
+    float   variance_numerator2;
+    float   sum_products;
+    float   correlation_coefficient_numerator;
+    float   correlation_coefficient_denominator;
+    float   correlation_coefficient;
+    int     control;
+    int     length;
+
+   /*
+    * EXECUTION SECTION
+    */
+
+   /*
+    * INPUT SUBSECTION
+    */
+
+   /*
+    * Input the number of elements of both lists
+    */
+    scanf("%d", &length);
+
+   /*
+    * Idiotproof the number of elements of both lists
+    */
+    if (length <= nothing_int) {
+
+       /*
+        * Prints out a relevant error message
+        */
+        printf("ERROR: Idiocy detected. You cannot have a length\n");
+        printf("of %d\n", length);
+
+       /*
+        * Exits the program with a bad return code
+        */
+        exit(program_fail_code);
+
+    } /* if (length <= nothing_int) */
+
+   /*
+    * Allocates memory for the first array
+    */
+    list1 = (float*)malloc(sizeof(float) * length);
+
+   /*
+    * Checks if first array memory allocation was successful
+    */
+    if (list1 == (float*)NULL) {
+
+       /*
+        * Prints out a relevant error message
+        */
+        printf("ERROR: Could not allocate memory for a list of\n");
+        printf("length %d\n", length);
+
+       /*
+        * Exits the program with a bad return code
+        */
+        exit(program_fail_code);
+
+    } /* if (list1 == (float*)NULL) */
+
+   /*
+    * Allocates memory for the second array
+    */
+    list2 = (float*)malloc(sizeof(float) * length);
+
+   /*
+    * Checks if second array memory allocation was successful
+    */
+    if (list2 == (float*)NULL) {
+
+       /*
+        * Prints out a relevant error message
+        */
+        printf("ERROR: Could not allocate memory for a list of\n");
+        printf("length %d\n", length);
+
+       /*
+        * Exits the program with a bad return code
+        */
+        exit(program_fail_code);
+
+    } /* if (list2 == (float*)NULL) */
+
+   /*
+    * Inputs all of the elements of both lists by iteration
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Inputs the list pair at the current element index
+        */
+        scanf("%f %f",
+            &list1[control],
+            &list2[control]);
+
+    } /* for control */
+
+   /*
+    * CALCULATION SUBSECTION
+    */
+
+   /*
+    * Sets the sum of the first list to nothing
+    */
+    sum1 = nothing_float;
+
+   /*
+    * Calculates the sum of the first list
+    */
+    for (control = nothing_int; control < length; control++) {
+        
+       /*
+        * Adds the current element to the total
+        */
+        sum1 += list1[control];
+
+    } /* for control */
+
+   /*
+    * Calculates the mean of the first list
+    */
+    mean1 = sum1 / length;
+
+   /*
+    * Sets the variance numerator of the first list to nothing
+    */
+    variance_numerator1 = nothing_float;
+
+   /*
+    * Calculates the variance numeartor for the first list
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Adds the square of the quantity of the distance of the
+        * current element from the mean to the total
+        */
+        variance_numerator1 += pow(list1[control] - mean1, 2);
+
+    } /* for control */
+
+   /*
+    * Calculates the variance of the first list
+    */
+    variance1 = variance_numerator1 / (length - 1);
+
+   /*
+    * Calculates the standard deviation of the first list
+    */
+    standard_deviation1 = sqrt(variance1);
+
+   /*
+    * Calculates the standard error of the first list
+    */
+    standard_error1 = standard_deviation1 / sqrt(length);
+
+   /*
+    * Sets the sum of the second list to nothing
+    */
+    sum2 = nothing_float;
+
+   /*
+    * Calculates the sum of the second list
+    */
+    for (control = nothing_int; control < length; control++) {
+   
+       /*
+        * Adds the current element in the second list to the total
+        */
+        sum2 += list2[control];
+
+    } /* for control */
+
+   /*
+    * Calculates the mean of the second list
+    */
+    mean2 = sum2 / length;
+
+   /*
+    * Sets the variance numerator of the second list to nothing
+    */
+    variance_numerator2 = nothing_float;
+
+   /*
+    * Calculates the variance numerator of the second list
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Adds the square of the quantity of the distance of the
+        * current element from the mean to the total
+        */
+        variance_numerator2 += pow(list2[control] - mean2, 2);
+
+    } /* for control */
+
+   /*
+    * Calculates the variance of the second list
+    */
+    variance2 = variance_numerator2 / (length - 1);
+
+   /*
+    * Calculates the standard deviation of the second list
+    */
+    standard_deviation2 = sqrt(variance2);
+
+   /*
+    * Calculates the standard error of the second list
+    */
+    standard_error2 = standard_deviation2 / sqrt(length);
+
+   /*
+    * Sets the sum of squares of the first list to zero
+    */
+    sum_squares1 = nothing_float;
+
+   /*
+    * Calculates the sum of squares for the first list
+    */
+    for (control = nothing_int; control < length; control++) {
+        
+       /*
+        * Adds the square of the current element to the total
+        */
+        sum_squares1 += pow(list1[control], 2);
+
+    } /* for control */
+
+   /*
+    * Calculates the sum of squares for the second list
+    */
+    sum_squares2 = nothing_float;
+
+   /*
+    * Calculates the sum of squares for the second list
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Adds the square of the current element to the total
+        */
+        sum_squares2 += pow(list2[control], 2);
+
+    } /* for control */
+
+   /*
+    * Sets the sum of the products to zero
+    */
+    sum_products = nothing_float;
+
+   /*
+    * Calculates the multidimentional dot product of the two lists
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Adds the product of the two current elements to the total
+        */
+        sum_products += list1[control] * list2[control];
+
+    } /* for control */
+
+   /*
+    * Calculates the numerator of the correlation coefficient
+    */
+    correlation_coefficient_numerator =
+        length *
+        sum_products -
+        sum1 *
+        sum2;
+
+   /*
+    * Calculates the denominator of the correlation coefficient
+    */
+    correlation_coefficient_denominator =
+        sqrt((length * sum_squares1 - pow(sum1, 2)) *
+             (length * sum_squares2 - pow(sum2, 2)));
+
+   /*
+    * Calculates the correlation coefficient
+    */
+    correlation_coefficient =
+        correlation_coefficient_numerator /
+        correlation_coefficient_denominator;
+
+   /*
+    * OUTPUT SUBSECTION
+    */
+
+   /*
+    * Display the number of elements in each array
+    */
+    printf("The length of the lists is %d\n", length);
+
+   /*
+    * Prepare to display the first list
+    */
+    printf("The elements of the first list:\n");
+
+   /*
+    * Loop through the elements in first list to display
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Display the current element
+        */
+        printf("%f\n", list1[control]);
+
+    } /* for control */
+
+   /*
+    * Prepare to display the second list
+    */
+    printf("The elements of the second list:\n");
+
+   /*
+    * Loop through the elements in second list to display
+    */
+    for (control = nothing_int; control < length; control++) {
+
+       /*
+        * Display the current element
+        */
+        printf("%f\n", list2[control]);
+
+    } /* for control */
+
+   /*
+    * Display first list stats
+    */
+    printf("The mean of the first list is %f\n", mean1);
+    printf("The varaince of the first list is %f\n", variance1);
+    printf("The standard deviation of the first list is %f\n", standard_deviation1);
+    printf("The standard error of the first list is %f\n", standard_error1);
+    
+   /*
+    * Display second list stats
+    */
+    printf("The mean of the second list is %f\n", mean2);
+    printf("The varaince of the second list is %f\n", variance2);
+    printf("The standard deviation of the second list is %f\n", standard_deviation2);
+    printf("The standard error of the second list is %f\n", standard_error2);
+    
+   /*
+    * Display both list stats
+    */
+    printf("The correlation coefficient of the lists is %f\n", correlation_coefficient);
+
+   /*
+    * Deallocate second list
+    */
+    free(list2);
+
+   /*
+    * Nullify second list pointer
+    */
+    list2 = (float*)NULL;
+
+   /*
+    * Deallocate first list
+    */
+    free(list1);
+
+   /*
+    * Nullify first list pointer
+    */
+    list1 = (float*)NULL;
+
+   /*
+    * Return a healthy code
+    */
+    return program_succ_code;
+
+} /* main */kennedy:vu0062> make clean
+rm -f my_number
+rm -f read_list
+rm -f census
+rm -f conversions
+rm -f statistics
+rm -f circlecalc
+rm -f absvalbytype
+rm -f italian
+rm -f hw11
+rm -f mean_dynamic
+rm -f big_statistics
+kennedy:vu0062> make big_statistics
+gcc -o big_statistics big_statistics.c -lm
+kennedy:vu0062> big _statistics < ~neem1883/CS1313pp5/actual_1.txt
+The length of the lists is 4
+The elements of the first list:
+110.000000
+220.250000
+330.500000
+440.750000
+The elements of the second list:
+22.750000
+33.500000
+44.250000
+55.000000
+The mean of the first list is 275.375000
+The varaince of the first list is 20258.437500
+The standard deviation of the first list is 142.332138
+The standard error of the first list is 71.166069
+The mean of the second list is 38.875000
+The varaince of the second list is 192.604172
+The standard deviation of the second list is 13.878190
+The standard error of the second list is 6.939095
+The correlation coefficient of the lists is 1.000000
+kennedy:vu0062> big_statistics < ~neem1883/CS1313pp5/actual_1.txt[P[1@2.txt
+The length of the lists is 48
+The elements of the first list:
+37.000000
+37.000000
+68.000000
+31.000000
+31.000000
+35.000000
+49.000000
+27.000000
+26.000000
+49.000000
+60.000000
+28.000000
+33.000000
+41.000000
+51.000000
+44.000000
+24.000000
+13.000000
+38.000000
+36.000000
+35.000000
+35.000000
+33.000000
+2.000000
+22.000000
+50.000000
+2.000000
+37.000000
+35.000000
+2.000000
+2.000000
+10.000000
+11.000000
+2.000000
+9.000000
+28.000000
+36.000000
+45.000000
+24.000000
+52.000000
+15.000000
+9.000000
+24.000000
+28.000000
+24.000000
+55.000000
+63.000000
+38.000000
+The elements of the second list:
+1.000000
+27.000000
+1.000000
+14.000000
+24.000000
+24.000000
+3.000000
+11.000000
+30.000000
+9.000000
+15.000000
+38.000000
+20.000000
+6.000000
+28.000000
+7.000000
+31.000000
+24.000000
+52.000000
+12.000000
+42.000000
+42.000000
+27.000000
+38.000000
+70.000000
+12.000000
+23.000000
+25.000000
+32.000000
+41.000000
+34.000000
+44.000000
+62.000000
+41.000000
+49.000000
+63.000000
+39.000000
+10.000000
+38.000000
+16.000000
+17.000000
+44.000000
+21.000000
+23.000000
+49.000000
+20.000000
+28.000000
+28.000000
+The mean of the first list is 30.958334
+The varaince of the first list is 284.934326
+The standard deviation of the first list is 16.879997
+The standard error of the first list is 2.436418
+The mean of the second list is 28.229166
+The varaince of the second list is 271.031464
+The standard deviation of the second list is 16.463034
+The standard error of the second list is 2.376234
+The correlation coefficient of the lists is -0.527791
+kennedy:vu0062> big_statistics < ~neem1883/CS1313pp5/actual_2.txt[P[1@3.txt
+The length of the lists is 116
+The elements of the first list:
+99.000000
+65.000000
+70.000000
+79.000000
+90.000000
+66.000000
+60.000000
+77.000000
+70.000000
+68.000000
+68.000000
+87.000000
+38.000000
+57.000000
+71.000000
+77.000000
+61.000000
+65.000000
+54.000000
+45.000000
+61.000000
+87.000000
+78.000000
+57.000000
+48.000000
+61.000000
+74.000000
+71.000000
+66.000000
+77.000000
+70.000000
+59.000000
+74.000000
+53.000000
+87.000000
+67.000000
+65.000000
+73.000000
+72.000000
+65.000000
+59.000000
+86.000000
+65.000000
+87.000000
+50.000000
+71.000000
+52.000000
+74.000000
+70.000000
+61.000000
+56.000000
+48.000000
+69.000000
+73.000000
+64.000000
+54.000000
+62.000000
+88.000000
+91.000000
+86.000000
+78.000000
+103.000000
+78.000000
+66.000000
+70.000000
+104.000000
+99.000000
+84.000000
+89.000000
+108.000000
+83.000000
+71.000000
+48.000000
+50.000000
+66.000000
+64.000000
+66.000000
+95.000000
+69.000000
+53.000000
+64.000000
+85.000000
+55.000000
+77.000000
+57.000000
+97.000000
+89.000000
+80.000000
+85.000000
+47.000000
+55.000000
+66.000000
+77.000000
+68.000000
+64.000000
+53.000000
+65.000000
+66.000000
+39.000000
+60.000000
+44.000000
+54.000000
+60.000000
+45.000000
+50.000000
+65.000000
+59.000000
+55.000000
+71.000000
+70.000000
+46.000000
+64.000000
+48.000000
+68.000000
+57.000000
+46.000000
+The elements of the second list:
+49.000000
+61.000000
+42.000000
+52.000000
+62.000000
+63.000000
+73.000000
+55.000000
+64.000000
+64.000000
+71.000000
+59.000000
+58.000000
+43.000000
+80.000000
+39.000000
+49.000000
+64.000000
+60.000000
+74.000000
+69.000000
+71.000000
+64.000000
+61.000000
+59.000000
+48.000000
+69.000000
+57.000000
+78.000000
+76.000000
+72.000000
+67.000000
+53.000000
+66.000000
+75.000000
+70.000000
+87.000000
+45.000000
+62.000000
+71.000000
+70.000000
+55.000000
+53.000000
+65.000000
+84.000000
+52.000000
+68.000000
+53.000000
+57.000000
+55.000000
+66.000000
+69.000000
+74.000000
+52.000000
+51.000000
+56.000000
+69.000000
+77.000000
+62.000000
+47.000000
+62.000000
+50.000000
+46.000000
+75.000000
+55.000000
+38.000000
+40.000000
+40.000000
+77.000000
+55.000000
+49.000000
+65.000000
+62.000000
+70.000000
+49.000000
+65.000000
+59.000000
+83.000000
+44.000000
+65.000000
+78.000000
+72.000000
+64.000000
+61.000000
+79.000000
+54.000000
+46.000000
+71.000000
+65.000000
+67.000000
+75.000000
+76.000000
+84.000000
+51.000000
+67.000000
+47.000000
+72.000000
+57.000000
+91.000000
+58.000000
+77.000000
+69.000000
+56.000000
+95.000000
+64.000000
+87.000000
+73.000000
+79.000000
+87.000000
+72.000000
+64.000000
+55.000000
+83.000000
+48.000000
+71.000000
+89.000000
+The mean of the first list is 68.043106
+The varaince of the first list is 218.459000
+The standard deviation of the first list is 14.780358
+The standard error of the first list is 1.372322
+The mean of the second list is 63.706898
+The varaince of the second list is 156.522034
+The standard deviation of the second list is 12.510877
+The standard error of the second list is 1.161606
+The correlation coefficient of the lists is -0.345331
+kennedy:vu0062> big_statistics < ~neem1883/CS1313pp5/actual_3.txt[P[P[P[P[P[P[P[P[1@i[1@d[1@i[1@o[1@t[1@_[1@1.txt
+ERROR: Idiocy detected. You cannot have a length
+of -4
+kennedy:vu0062> big_statistics < ~neem1883/CS1313pp5/idiot_1.txt[P[1@2.txt
+ERROR: Idiocy detected. You cannot have a length
+of 0
+kennedy:vu0062> ^Dexit
+
+Script done on Tue 08 Nov 2022 03:58:00 PM CST
